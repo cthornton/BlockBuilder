@@ -79,7 +79,7 @@ def create_remote_user(username, password, &block)
   # have the user information saved in your local database and you can retrieve the
   # user information later.
   result = api.create_user username, password
-  builder.on_user_created(result)
+  builder.on_user_created.call(result)
 
   # Now we can keep on executing methods and have somewhere else take care of it. Using
   # the set logger variable, we can allow someone to externally change the logger used.
