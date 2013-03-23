@@ -1,7 +1,7 @@
 module BlockBuilder
   class Builder
     
-    attr_reader :_target_block, :_symbol_table, :_options, :_config_table
+    attr_reader :_target_block, :_symbol_table, :_options, :_config_table, :_abstract_list
 
 
     def initialize(target_block, *args, &default_block)
@@ -12,8 +12,16 @@ module BlockBuilder
       @_options = options
       @_symbol_table = Hash.new
       @_config_table = Hash.new
+      @_abstract_list = Array.new
+      
+      # Default block, target block!
       _build(default_block)
       _build(target_block)
+      
+      # Now call them out on abstractness!
+      _abstract_list.each do |method|
+        raise ArgumentError, "Abstract callback '#{method}' must be defined" unless _symbol_table.key?(method)
+      end
     end
     
     
@@ -23,6 +31,11 @@ module BlockBuilder
     
     def set(key, val)
       _config_table[key] = val
+    end
+    
+    # Define methods as abstract, so they must be implemented
+    def abstract(*methods)
+      @_abstract_list = _abstract_list | methods
     end
 
     def method_missing(method, *args, &block)
@@ -45,7 +58,11 @@ module BlockBuilder
       attribute.block = block if block_given?
       
       return attribute
-    end   
+    end
+    
+    def defined?(method_call)
+      _symbol_table.key?(method_call)
+    end
     
     
   end
