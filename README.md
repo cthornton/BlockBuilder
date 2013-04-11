@@ -56,7 +56,7 @@ end
 Sometimes you might connect to another service or API that contains critical information. And perhaps you need to query multiple times with this API to get the data you need. Callbacks can help with this!
 
 ```ruby
- As a convention, you should always document a block builder method and let consumers of
+# As a convention, you should always document a block builder method and let consumers of
 # this method know how to use it!
 # @example
 #   # Here is a code sample on how to use this method, etc
