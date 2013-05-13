@@ -3,7 +3,21 @@ BlockBuilder
 Make callbacks easily and build blocks with ease! BlockBuilder is intended to be used with more heavy weight method calls that might require intermediate callbacks. It's almost like creating classes on the fly!
 
 ## Usage
-Some code samples to get you started:
+Add to your Gemfile:
+```ruby
+gem "blockbuilder", "~> 0.0.1"
+```
+
+And require BlockBuilder in your application:
+```ruby
+require 'block_builder'
+```
+
+### Caveats
+BlockBuilder makes use of the [instance_eval](http://ruby-doc.org/core-2.0/BasicObject.html#method-i-instance_eval) 
+method. As such, using `self` may not work as you expect. In addition, you may not be able to access some variables
+outside the scope of the block.
+
 
 ### File Download Example
 Downloading a file probably doesn't merit the block builder, but it demonstrates the concept of callbacks.
